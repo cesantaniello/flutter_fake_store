@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
 
-import '../widget/appbar_icons.dart';
+import '../widgets/appbar_icons.dart';
+import '../widgets/sale_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,11 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
     _textEditingController.dispose();
     super.dispose();
   }
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
           // elevation: 4,
@@ -74,7 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: lightIconsColor,
                   )
                 ),
-              )
+              ),
+              const SaleWidget(),
             ],
           ),
         ),
