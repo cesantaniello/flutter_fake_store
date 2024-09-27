@@ -26,4 +26,8 @@ class ProductsModel {
         ? CategoriesModel.fromJson(json['category'])
         : null;
   }
+  static List<ProductsModel> productsFromSnapshot(List productSnapshot) => 
+    productSnapshot.map((data) => 
+      ProductsModel.fromJson(data)
+    ).toList();
 }

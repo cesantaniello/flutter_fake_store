@@ -5,8 +5,9 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import '../consts/global_colors.dart';
 
 class FeedsWidget extends StatelessWidget {
-  const FeedsWidget({Key? key}) : super(key: key);
+  const FeedsWidget({Key? key, required this.title, required this.imageUrl}) : super(key: key);
 
+  final String title, imageUrl;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -56,7 +57,7 @@ class FeedsWidget extends StatelessWidget {
                     color: Colors.red,
                     size: 28,
                   ),
-                  imageUrl: "https://i.ibb.co/vwB46Yq/shoes.png",
+                  imageUrl: imageUrl,
                   boxFit: BoxFit.fill,
                 ),
               ),
