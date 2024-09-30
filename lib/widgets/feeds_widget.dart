@@ -1,15 +1,18 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
+import 'package:store_api_flutter_course/models/products_model.dart';
 
 import '../consts/global_colors.dart';
 
 class FeedsWidget extends StatelessWidget {
-  const FeedsWidget({Key? key, required this.title, required this.imageUrl}) : super(key: key);
+  const FeedsWidget({Key? key})
+      : super(key: key);
 
-  final String title, imageUrl;
   @override
   Widget build(BuildContext context) {
+    final ProductsModel productsModelProvider = Provider.of<ProductsModel>(context);
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(2.0),
@@ -35,7 +38,7 @@ class FeedsWidget extends StatelessWidget {
                                 color: Color.fromRGBO(33, 150, 243, 1)),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: "168.00",
+                                  text: "${productsModelProvider.price}",
                                   style: TextStyle(
                                       color: lightTextColor,
                                       fontWeight: FontWeight.w600)),
@@ -57,7 +60,7 @@ class FeedsWidget extends StatelessWidget {
                     color: Colors.red,
                     size: 28,
                   ),
-                  imageUrl: imageUrl,
+                  imageUrl: productsModelProvider.images![0],
                   boxFit: BoxFit.fill,
                 ),
               ),
