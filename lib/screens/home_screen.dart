@@ -23,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _textEditingController;
-  List<ProductsModel> productsList = [];
+  //List<ProductsModel> productsList = [];
   @override
   void initState() {
     _textEditingController = TextEditingController();
@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _textEditingController.dispose();
     super.dispose();
   }
-
+/*
   @override
   void didChangeDependencies() {
     getProducts();
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     productsList = await APIHandler.getAllProducts();
     setState((){});
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -163,9 +163,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                    productsList.isEmpty 
-                      ? Container() 
-                      : FeedsGridWidget(productsList: productsList),
+                      FutureBuilder<List<ProductsModel>>(
+                          future: APIHandler.getAllProducts(),
+                          builder: ((context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              Center(
+                                child:
+                                    Text("An error occured ${snapshot.error}"),
+                              );
+                            } else if (snapshot.data == null) {
+                              const Center(
+                                child: Text("No products has been added yet"),
+                              );
+                            }
+                            return FeedsGridWidget(
+                                productsList: snapshot.data!);
+                          }))                    
                     ]),
                   ),
                 )
