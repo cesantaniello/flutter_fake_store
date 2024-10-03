@@ -1,4 +1,6 @@
-class CategoriesModel {
+import 'package:flutter/material.dart';
+
+class CategoriesModel with ChangeNotifier{
   int? id;
   String? name;
   String? image;
@@ -10,4 +12,7 @@ class CategoriesModel {
     name = json['name'];
     image = json['image'];
   }
+  static List<CategoriesModel> categoriesFromSnapshot(List categoriesSnapshot) => 
+    categoriesSnapshot.map((data) => CategoriesModel.fromJson(data)
+  ).toList();
 }
