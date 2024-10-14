@@ -1,18 +1,20 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:store_api_flutter_course/models/products_model.dart';
 
 import '../consts/global_colors.dart';
+import '../screens/product_details.dart';
 
 class FeedsWidget extends StatelessWidget {
-  const FeedsWidget({Key? key})
-      : super(key: key);
+  const FeedsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ProductsModel productsModelProvider = Provider.of<ProductsModel>(context);
+    final productsModelProvider = Provider.of<ProductsModel>(context);
+
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(2.0),
@@ -21,7 +23,15 @@ class FeedsWidget extends StatelessWidget {
         color: Theme.of(context).cardColor,
         child: InkWell(
           borderRadius: BorderRadius.circular(8.0),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.fade,
+                child: ProductDetails(id: productsModelProvider.id.toString(),),
+              ),
+            );
+          },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -33,7 +43,7 @@ class FeedsWidget extends StatelessWidget {
                     Flexible(
                       child: RichText(
                         text: TextSpan(
-                            text: '\$ ',
+                            text: '\$',
                             style: const TextStyle(
                                 color: Color.fromRGBO(33, 150, 243, 1)),
                             children: <TextSpan>[
@@ -65,13 +75,13 @@ class FeedsWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Title",
+                  productsModelProvider.title.toString(),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 17,
                     //  fontFamily: 'Roboto',
                     fontWeight: FontWeight.w700,
