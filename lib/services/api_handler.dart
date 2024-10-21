@@ -7,10 +7,19 @@ import 'package:store_api_flutter_course/models/products_model.dart';
 import 'package:store_api_flutter_course/models/users_model.dart';
 
 class APIHandler {
-  static Future<List<dynamic>> getData({required String target}) async {
+  static Future<List<dynamic>> getData({
+    required String target,
+    String? limit,
+    }) async {
     var uri = Uri.https(
       BASE_URL,
       "api/v1/$target",
+      target == "products"
+        ? {
+          "offset": "0",
+          "limit": limit
+        }
+        : {}
     );
     var response = await http.get(uri);
 
@@ -24,8 +33,8 @@ class APIHandler {
     return templist;
   }
 
-  static Future<List<ProductsModel>> getAllProducts() async {
-    List temp = await getData(target: "products");
+  static Future<List<ProductsModel>> getAllProducts({required String limit}) async {
+    List temp = await getData(target: "products", limit: limit);
     return ProductsModel.productsFromSnapshot(temp);
   }
 
